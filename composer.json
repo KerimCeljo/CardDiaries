@@ -1,0 +1,15 @@
+{
+    "name": "becir/cardiaries",
+    "autoload": {
+        "psr-4": {
+            "Becir\\Cardiaries\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ahmedbecirevic",
+            "email": "ahmed.becirevic@stu.ibu.edu.ba"
+        }
+    ],
+    "require": {}
+}
