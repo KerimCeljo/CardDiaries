@@ -1,2 +1,2 @@
 # CardDiaries
-Click [HERE](https://swe-cardiaries-ylkun.ondigitalocean.app/) to access the live application.
+Click [HERE](https://swe-cardairies.herokuapp.com/) to access the live application.
