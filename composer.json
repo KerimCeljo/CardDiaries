@@ -1,10 +1,7 @@
 {
-    "name": "becir/cardiaries",
-    "autoload": {
-        "psr-4": {
-            "Becir\\Cardiaries\\": "src/"
-        }
-    },
+    "name": "ibu/cardiaries",
+    "description": "site for car info",
+    "license": "apache2",
     "authors": [
         {
             "name": "ahmedbecirevic",
@@ -12,6 +9,10 @@
         }
     ],
     "require": {
-        "mikecao/flight": "^2.0"
+        "mikecao/flight": "^2.0",
+        "zircote/swagger-php": "^3.1",
+        "swiftmailer/swiftmailer": "^6.2",
+        "firebase/php-jwt": "^5.2",
+        "aws/aws-sdk-php": "^3.179"
     }
 }
