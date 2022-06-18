@@ -1,7 +1,8 @@
 <?php
 require_once dirname(__FILE__) . "/../config.php";
-/** 
- * Main class for intercating with the database.
+require_once dirname(__FILE__) . "/../DatabaseConnection.class.php";
+/**
+ * Main class for interacting with the database.
  *
  * Every other DAO class should inherit this class.
  *
@@ -15,14 +16,15 @@ class BaseDao
     public function __construct($table)
     {
         $this->table = $table;
-        try {
-            $this->connection = new PDO("mysql:host=" . Config::DB_HOST() . ";port=".Config::DB_PORT() . ";dbname=" . Config::DB_SCHEME(), Config::DB_USERNAME(), Config::DB_PASSWORD());
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connection = DatabaseConnection::getInstance();
+//        try {
+//            $this->connection = new PDO("mysql:host=" . Config::DB_HOST() . ";port=" . Config::DB_PORT() . ";dbname=" . Config::DB_SCHEME(), Config::DB_USERNAME(), Config::DB_PASSWORD());
+//            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             date_default_timezone_set("Europe/Sarajevo");
             // $this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
-        } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-        }
+//        } catch (PDOException $e) {
+//            echo "Connection failed: " . $e->getMessage();
+//        }
     }
 
     public function beginTransaction()
@@ -51,7 +53,6 @@ class BaseDao
                 break;
             default:
                 throw new Exception("Invalid order format, character should be either + or -");
-                break;
         }
         $order_column = trim($this->connection->quote(substr($order, 1)), "'");
         return [$order_column, $order_direction];
@@ -87,7 +88,7 @@ class BaseDao
         }
 
         $query = substr($query, 0, -2);
-        $query .= " WHERE {$id_column} = :id";
+        $query .= " WHERE $id_column = :id";
 
         //executing the query
         $stmt = $this->connection->prepare($query);
@@ -100,13 +101,13 @@ class BaseDao
         $stmt = $this->connection->prepare($query);
         $stmt->execute($params);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // PDO::FETCH_ASSOC used to ensure no duplicate elements 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // PDO::FETCH_ASSOC used to ensure no duplicate elements
     }
 
     protected function query_unique($query, $params)
     {
         $result = $this->query($query, $params);
-        return reset($result); // reset - returns first element of array, checks if null etc. 
+        return reset($result); // reset - returns first element of array, checks if null etc.
     }
 
     public function add($entity)

@@ -1,4 +1,5 @@
 <?php
+
 require_once dirname(__FILE__) . "/BaseDao.class.php";
 
 class UserDao extends BaseDao
@@ -7,7 +8,6 @@ class UserDao extends BaseDao
     {
         parent::__construct("users");
     }
-
 
     public function get_user_by_email($email)
     {
