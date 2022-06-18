@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>CarDiaries Login</title>
+
+        <link href="assets/css/styles.css" rel="stylesheet" />
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" 
+        crossorigin="anonymous"></script>
+
+        <!-- Toastr CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    </head>
+    <body style="display:none" class="bg-primary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <!-- modal to display car -->
+                        <!-- Modal triggered by search box onclick func-->
+                        <div class="modal fade bd-example-modal-lg" id="get-car-from-vin-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Car you searched for</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <i class="fas fa-car mr-1"></i>
+                                            Info about the car!
+                                        </div>
+                                        <div class="card" id="cars-insert">
+                                            
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <!-- ALERT FOR REGISTERING -->
+                        <div id="form-alert" class="alert alert-success text-center" role="alert" style="display: none; margin-top: 40px;">
+                            Alert Message
+                        </div>
+                        <!-- Log In! -->
+                        <div class="row justify-content-center mt-4">
+                            <div id="login-form-container" class="col-lg-5" >
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-body">
+                                        <form id="login-form">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="email">Email</label>
+                                                <input id="email" class="form-control py-4" name="email" type="email" placeholder="Enter email address" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="password">Password</label>
+                                                <input id="password" class="form-control py-4" name="password" type="password" placeholder="Enter password" />
+                                            </div>
+                                         
+                                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <a class="small" onclick="Login.showForgotForm()">Forgot Password?</a>
+                                                <button id="login-link" class="btn btn-primary" type="submit">Login</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small"><button type="button" class="btn btn-secondary btn-sm" onclick="Login.showRegisterForm()">Need an account? Sign up!</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Start of register -->
+                            <div id="register-form-container" class="col-lg-7" style="display: none;">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-body">
+                                        <form id="register-form">
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="register-name">First Name</label>
+                                                        <input class="form-control py-4" type="text" placeholder="Enter first name" name="first_name" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="register-last">Last Name</label>
+                                                        <input class="form-control py-4" type="text" placeholder="Enter last name" name="last_name"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="register-email">Email</label>
+                                                <input class="form-control py-4" type="email" aria-describedby="emailHelp" placeholder="Enter email address" name="email"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="register-username">Username</label>
+                                                <input class="form-control py-4" type="search" autocomplete="off" placeholder="Enter your username" name="username"/>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="register-password">Password</label>
+                                                        <input autocomplete="new-password"class="form-control py-4" type="password" placeholder="Enter password" name="password"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-4 mb-0"><button id="register-link" class="btn btn-primary btn-block" type="submit">Create Account</button></div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small"><button type="button" class="btn btn-secondary btn-sm" onclick="Login.showLoginForm()">Have an account? Go to login</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Forgot Password START -->
+                            <div id="forgot-form-container" class="col-lg-5" style="display: none;">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
+                                    <div class="card-body">
+                                        <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
+                                        <form id="forgot-form">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                                <input name="email" class="form-control py-4" type="email" aria-describedby="emailHelp" placeholder="Enter email address" />
+                                            </div>
+                                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <a class="small" onclick="Login.showLoginForm()">Return to login</a>
+                                                <button id="forgot-link" class="btn btn-primary" type="submit">Reset Password</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small"><button type="button" class="btn btn-secondary btn-sm" onclick="Login.showRegisterForm()">Need an account? Sign up!</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Forgot Password END -->
+                            <!-- Change password / enter new -->
+                            <div id="change-form-container" class="col-lg-5" style="display: none;">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Change</h3></div>
+                                    <div class="card-body">
+                                        <form autocomplete="off" id="change-form">
+                                                <input name="token" id="change-password-token" class="form-control py-4" type="hidden" placeholder="Enter token"/>
+                                            <div class="form-group">
+                                                <label class="small mb-1">New Password</label>
+                                                <input name="password" class="form-control py-4" type="search" placeholder="Enter new password" />
+                                            </div>
+                                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <a class="small"></a>
+                                                <button id="change-link" class="btn btn-primary" type="submit">Change Password</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small"><button type="button" class="btn btn-secondary btn-sm" onclick="Login.showRegisterForm()">Need an account? Sign up!</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Search box -->
+                        <div class="search-vin-box">
+                            <form class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2" id="search-vin-form">
+                                <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Enter vehicle VIN"
+                                aria-label="Search" name="vin">
+                                <!-- triggers modal and ajax call to get car by VIN -->
+                                <button class="fas fa-search" aria-hidden="true" data-toggle="modal" onclick="Login.displayCar()"></button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <!-- FOOTER -->
+            <div id="layoutAuthentication_footer" class="mt-4">
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; CarDiaries 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="assets/js/scripts.js"></script>
+        <script src="./assets/js/utils.js"></script>
+        <script src="./assets/js/restClient.js"></script>
+        <script src="./assets/js/controllers/cars.js"></script>
+        <script src="./assets/js/controllers/posts.js"></script>
+        <script src="./assets/js/controllers/login.js"></script>
+
+        <!-- Toastr JavaScript -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <!-- validation -->
+        <script src="//cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+        <script>Login.init()</script>
+    </body>
+</html>
