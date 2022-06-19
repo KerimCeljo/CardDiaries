@@ -8,23 +8,23 @@ class Config
     // DB connection
     public static function DB_HOST()
     {
-        return Config::get_env("DB_HOST", "ibu-sql-2022.adnan.dev");
+        return Config::get_env("DB_HOST", null);
     }
     public static function DB_USERNAME()
     {
-        return Config::get_env("DB_USERNAME", "user_ahmed");
+        return Config::get_env("DB_USERNAME", null);
     }
     public static function DB_PASSWORD()
     {
-        return Config::get_env("DB_PASSWORD", "8yzGgKFC");
+        return Config::get_env("DB_PASSWORD", null);
     }
     public static function DB_SCHEME()
     {
-        return Config::get_env("DB_SCHEME", "db_ahmed");
+        return Config::get_env("DB_SCHEME", null);
     }
     public static function DB_PORT()
     {
-        return Config::get_env("DB_PORT", "3306");
+        return Config::get_env("DB_PORT", null);
     }
 
     // mail provider
@@ -38,21 +38,21 @@ class Config
     }
     public static function SMTP_USER()
     {
-        return Config::get_env("SMTP_USER", "ahmed.becirevic@stu.ibu.edu.ba");
+        return Config::get_env("SMTP_USER", null);
     }
     public static function SMTP_PASSWORD()
     {
-        return Config::get_env("SMTP_PASSWORD", 'UG7t5K');
+        return Config::get_env("SMTP_PASSWORD", null);
     }
 
     // spaces
     public static function SPACES_KEY()
     {
-        return Config::get_env("SPACES_KEY", "4FAWWR5G3QTHX7HWNZ7L");
+        return Config::get_env("SPACES_KEY", null);
     }
     public static function SPACES_SECRET()
     {
-        return Config::get_env("SPACES_SECRET", "yQadM0IGlUEswsEzAbFvU3fS+nmxr/mcgR+OT3biCTU");
+        return Config::get_env("SPACES_SECRET", null);
     }
 
     // environment servers setup
