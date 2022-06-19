@@ -11,35 +11,25 @@ require_once dirname(__FILE__) . "/../DatabaseConnection.class.php";
 class BaseDao
 {
     private $table;
-    protected $connection;
 
     public function __construct($table)
     {
         $this->table = $table;
-        $this->connection = DatabaseConnection::getInstance();
-//        try {
-//            $this->connection = new PDO("mysql:host=" . Config::DB_HOST() . ";port=" . Config::DB_PORT() . ";dbname=" . Config::DB_SCHEME(), Config::DB_USERNAME(), Config::DB_PASSWORD());
-//            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            date_default_timezone_set("Europe/Sarajevo");
-            // $this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
-//        } catch (PDOException $e) {
-//            echo "Connection failed: " . $e->getMessage();
-//        }
     }
 
     public function beginTransaction()
     {
-        $this->connection->beginTransaction();
+        DatabaseConnection::getInstance()->beginTransaction();
     }
 
     public function rollBack()
     {
-        $this->connection->rollBack();
+        DatabaseConnection::getInstance()->rollBack();
     }
 
     public function commit()
     {
-        $this->connection->commit();
+        DatabaseConnection::getInstance()->commit();
     }
 
     public function parse_order($order)
@@ -54,7 +44,7 @@ class BaseDao
             default:
                 throw new Exception("Invalid order format, character should be either + or -");
         }
-        $order_column = trim($this->connection->quote(substr($order, 1)), "'");
+        $order_column = trim(DatabaseConnection::getInstance()->quote(substr($order, 1)), "'");
         return [$order_column, $order_direction];
     }
 
@@ -72,9 +62,9 @@ class BaseDao
         }
         $query = substr($query, 0, -2) . ")";
 
-        $stmt = $this->connection->prepare($query);
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
         $stmt->execute($entity);         //prevent sql injection
-        $entity["id"] = $this->connection->lastInsertId();
+        $entity["id"] = DatabaseConnection::getInstance()->lastInsertId();
         return $entity;
     }
 
@@ -91,14 +81,14 @@ class BaseDao
         $query .= " WHERE $id_column = :id";
 
         //executing the query
-        $stmt = $this->connection->prepare($query);
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
         $entity['id'] = $id;
         $stmt->execute($entity);
     }
 
     protected function query($query, $params)
     {
-        $stmt = $this->connection->prepare($query);
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
         $stmt->execute($params);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // PDO::FETCH_ASSOC used to ensure no duplicate elements
